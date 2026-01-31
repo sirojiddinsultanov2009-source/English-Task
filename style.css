@@ -1,54 +1,73 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: #006eff;
+  --blue-light: #4da3ff;
+  --blue-soft: #eaf3ff;
+  --white: #ffffff;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
-  background: #006eff;
+  background: linear-gradient(180deg, #006eff, #1b7cff);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: system-ui, sans-serif;
+  padding: 20px;
+  animation: fadeIn 0.6s ease;
 }
 
-/* ===== main screen ===== */
-.logo {
-  width: 80px;
-  margin-bottom: 20px;
-}
-
+/* ===== MAIN ===== */
 .header {
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 800;
-  color: white;
+  color: var(--white);
+  text-align: center;
   margin: 0;
+  animation: slideDown 0.6s ease;
 }
 
 .subtitle {
   color: rgba(255,255,255,0.9);
-  margin: 10px 0 40px;
+  margin: 12px 0 36px;
+  text-align: center;
+  animation: fadeIn 0.8s ease;
 }
 
 .menu {
-  padding: 14px 36px;
+  padding: 16px 42px;
   border: none;
-  border-radius: 10px;
-  background: white;
-  color: #006eff;
+  border-radius: 14px;
+  background: var(--white);
+  color: var(--blue);
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* ===== overlay ===== */
+.menu:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* ===== OVERLAY ===== */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.45);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: 0.3s;
+  transition: opacity 0.4s ease;
+  padding: 20px;
 }
 
 .overlay.active {
@@ -57,313 +76,251 @@ body {
 }
 
 .modal {
-  background: white;
-  padding: 30px;
-  border-radius: 16px;
-  width: 340px;
-  text-align: center;
-  transform: scale(0.9);
+  width: 100%;
+  max-width: 420px;
+  background: var(--white);
+  border-radius: 22px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform: translateY(20px) scale(0.96);
   opacity: 0;
-  transition: 0.3s;
+  transition: 0.4s ease;
 }
 
 .overlay.active .modal {
-  transform: scale(1);
+  transform: translateY(0) scale(1);
   opacity: 1;
 }
 
-/* ===== sections ===== */
+/* ===== SECTIONS ===== */
 .sections {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin: 20px 0;
 }
 
 .sections button {
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  background: #006eff;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.correct {
-  background: #28a745 !important;
-}
-
-.close {
-  background: none;
-  border: none;
-  color: #006eff;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* ===== TABS ===== */
-.tabs {
-  display: flex;
-  flex-direction: column; 
-  gap: 8px;
-  margin-bottom: 20px;
-  align-items: center; 
-}
-
-.tabs {
   width: 100%;
-}
-
-.tabs button {
-  width: 100%;
-  padding: 15px;
+  padding: 16px;
   border: none;
-  border-radius: 10px;
-  background: #006eff;
-  color: white;
+  border-radius: 14px;
+  background: var(--blue);
+  color: var(--white);
   font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease;
 }
 
-.tabs button.active {
-  background: #006eff;
-  color: white;
+.sections button:hover {
+  background: var(--blue-light);
+  transform: translateY(-1px);
 }
 
-.tabs.hidden {
+.hidden {
   display: none;
 }
 
-
-#card-container {
-  margin: 20px 0;
-  display: flex;
-  justify-content: center;   /* по горизонтали */
-}
-
-
-.card {
-  position: relative;
-  width: 260px;
-  height: 200px;
-  perspective: 1000px;
-}
-
-.card > div {
-  position: absolute;
-  inset: 0;
-  background: #f1f1f19f;
-  border-radius: 16px;
-  padding: 20px;
-  box-sizing: border-box;
-  backface-visibility: hidden;
+/* ===== TASK CONTENT ===== */
+#content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 16px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: var(--blue-soft);
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
+  animation: fadeUp 0.4s ease;
 }
 
-/* front / back */
-.card .back {
-  transform: rotateY(180deg);
+.card p {
+  margin: 0;
+  font-weight: 600;
+  text-align: center;
 }
 
-.card.flipped .front {
-  transform: rotateY(180deg);
+/* ===== INPUT ===== */
+.card input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #cddcff;
+  font-size: 15px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card.flipped .back {
-  transform: rotateY(0deg);
+.card input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0,110,255,0.15);
 }
 
-/* animation */
-.card .front,
-.card .back {
-  transition: transform 0.4s;
-}
-
-/* ===== buttons in card ===== */
+/* ===== CHOICE BUTTONS ===== */
 .card button {
   border: none;
-  border-radius: 8px;
-  padding: 8px 14px;
-  cursor: pointer;
+  border-radius: 12px;
+  padding: 12px;
   font-weight: 600;
+  cursor: pointer;
+  background: var(--blue);
+  color: var(--white);
+  transition: background 0.25s ease, transform 0.2s ease;
 }
 
-/* know / dont know */
-button[data-action="next"] {
-  background: #27c94d;
-  color: white;
-}
-
-button[data-action="dont"] {
-  background: #e63946;
-  color: white;
-}
-
-/* sound & flip */
-button[data-action="sound"] {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: none;
-  font-size: 18px;
-}
-
-button[data-action="flip"] {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: none;
-  font-size: 18px;
-}
-
-/* hover */
 .card button:hover {
-  transform: scale(1.05);
+  background: var(--blue-light);
+  transform: scale(1.03);
 }
 
-.topics-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin: 20px 0;
-  
-}
-
-.topic-col {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  
-}
-
-.topic-col h3 {
-  margin: 0 0 6px;
+/* ===== CLOSE ===== */
+.close {
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-weight: 700;
   font-size: 16px;
-  color: #006eff;
-  
-}
-
-.topic-col button {
-    width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 10px;
-  background: #006eff;
-  color: white;
-  font-weight: 600;
   cursor: pointer;
+  margin-top: 8px;
+  transition: opacity 0.2s ease;
 }
 
-.modal {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.close:hover {
+  opacity: 0.7;
 }
 
-.topic-text ul {
-  padding-right: 25px;
-  display: inline-block;
+.card {
+  min-height: 220px;
+  justify-content: space-between;
+}
+
+small {
   text-align: center;
+  opacity: 0.6;
+}
+
+/* ===== ANSWER STATES ===== */
+.correct {
+  background: #2ecc71 !important;
+  color: #fff !important;
+}
+
+.wrong {
+  background: #e74c3c !important;
+  color: #fff !important;
+}
+
+.choice-btn.selected {
+  outline: 2px solid #006eff;
+}
+
+.choice-btn:disabled {
+  cursor: default;
+  opacity: 0.9;
+}
+
+input.correct {
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.25);
+}
+
+input.wrong {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
+}
+
+.hint {
+  margin-top: 8px;
   font-size: 14px;
-}
-
-.topic-text ul {
-  padding-left: 18px;
-  margin: 8px 0;
-}
-
-.formula {
-  background: #f1f4ff;
-  padding: 14px;
-  border-radius: 12px;
   font-weight: 600;
-  line-height: 1.6;
+  color: #006eff;
   text-align: center;
 }
 
-.video iframe {
-  width: 100%;
-  height: 180px;
+
+/* ===== RESULT TABS ===== */
+.tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px;
   border: none;
   border-radius: 12px;
+  background: #eaf3ff;
+  color: #006eff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-/* ================== Responsive fix ================== */
-* { box-sizing: border-box; }
-
-img, iframe, video {
-  max-width: 100%;
-  height: auto;
+.tab.active {
+  background: #006eff;
+  color: #fff;
 }
 
-/* Чтобы оверлей мог скроллиться на телефоне */
-.overlay {
-  padding: 16px;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+.tab-content {
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
-/* Модалка не фиксированной ширины, а под экран */
-.modal {
-  width: min(420px, 92vw);
-  max-height: 92vh;
-  overflow: auto;
+.tab-content ul {
+  padding-left: 18px;
 }
 
-/* Чуть аккуратнее кнопки и отступы */
-.sections button,
-.tabs button,
-.topic-col button {
-  width: 100%;
+.tab-content li {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
 }
 
-/* ====== Phone ====== */
-@media (max-width: 480px) {
-  body {
-    padding: 20px 16px;
-    justify-content: flex-start; /* вместо центра по вертикали */
-  }
-
-  .header {
-    font-size: 34px;
-    line-height: 1.1;
-    text-align: center;
-  }
-
-  .subtitle {
-    text-align: center;
-    margin: 10px 0 24px;
-  }
-
-  .menu {
-    width: 100%;
-    max-width: 360px;
-  }
-
-  /* Темы: вместо 3 колонок — 1 колонка */
-  .topics-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  /* Карточка слов — чуть резиновее */
-  .card {
-    width: min(320px, 92vw);
-  }
-
-  .video iframe {
-    height: 200px; /* чуть выше на мобиле, чтобы было комфортно */
-  }
+.tab-content li.correct {
+  background: #2ecc71;
+  color: #fff;
 }
 
-/* ====== Tablet ====== */
-@media (max-width: 768px) {
-  .topics-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+.tab-content li.wrong {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.tab-content small {
+  display: block;
+  opacity: 0.9;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 600px) {
+  .header { font-size: 48px; }
+  .modal { max-width: 520px; }
+}
+
+@media (min-width: 1024px) {
+  .modal { max-width: 640px; }
 }
